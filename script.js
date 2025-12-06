@@ -123,3 +123,4 @@ searchInput.addEventListener("input", () => {
 renderMovies();
 
 
+

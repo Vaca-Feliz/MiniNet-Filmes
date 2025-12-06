@@ -1,119 +1,78 @@
-let movies = JSON.parse(localStorage.getItem("movies")) || [];
-
-const movieList = document.getElementById("movieList");
-const addMovieBtn = document.getElementById("addMovieBtn");
-const searchBar = document.getElementById("searchBar");
-
-const modal = document.getElementById("editModal");
-const closeBtn = document.getElementById("closeModalBtn");
-const saveBtn = document.getElementById("saveMovieBtn");
-
-const titleInput = document.getElementById("movieTitleInput");
-const ageInput = document.getElementById("movieAgeInput");
-const ratingInput = document.getElementById("movieRatingInput");
-const imageInput = document.getElementById("movieImageInput");
-
-let editingIndex = -1;
-
-// Mostrar filmes
-function renderMovies() {
-    movieList.innerHTML = "";
-
-    const search = searchBar.value.toLowerCase();
-
-    movies
-        .filter(m => m.title.toLowerCase().includes(search))
-        .forEach((movie, index) => {
-            const card = document.createElement("div");
-            card.className = "movie-card";
-
-            card.innerHTML = `
-                <img src="${movie.image}" alt="Imagem do filme" />
-                <h3>${movie.title}</h3>
-                <p>Idade mínima: ${movie.age}</p>
-                <p>Avaliação: ${movie.rating}/10</p>
-
-                <button class="edit-btn" onclick="editMovie(${index})">Editar</button>
-                <button class="delete-btn" onclick="deleteMovie(${index})">Remover</button>
-            `;
-
-            movieList.appendChild(card);
-        });
+body {
+  background: #0b0f14;
+  color: #fff;
+  font-family: Arial, sans-serif;
+  margin: 20px;
 }
 
-renderMovies();
-
-// Abrir modal para adicionar
-addMovieBtn.onclick = () => {
-    editingIndex = -1;
-    titleInput.value = "";
-    ageInput.value = "";
-    ratingInput.value = "";
-    imageInput.value = "";
-    modal.style.display = "flex";
-};
-
-// Editar filme
-function editMovie(index) {
-    editingIndex = index;
-
-    const movie = movies[index];
-
-    titleInput.value = movie.title;
-    ageInput.value = movie.age;
-    ratingInput.value = movie.rating;
-    imageInput.value = "";
-
-    modal.style.display = "flex";
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  gap: 10px;
 }
 
-// Guardar filme
-saveBtn.onclick = () => {
-    let imgData = movies[editingIndex]?.image || "";
-
-    if (imageInput.files.length > 0) {
-        const reader = new FileReader();
-        reader.onload = () => {
-            imgData = reader.result;
-            saveData(imgData);
-        };
-        reader.readAsDataURL(imageInput.files[0]);
-    } else {
-        saveData(imgData);
-    }
-};
-
-// Função que grava os dados
-function saveData(imgData) {
-    const movieData = {
-        title: titleInput.value,
-        age: ageInput.value,
-        rating: ratingInput.value,
-        image: imgData
-    };
-
-    if (editingIndex === -1) {
-        movies.push(movieData);
-    } else {
-        movies[editingIndex] = movieData;
-    }
-
-    localStorage.setItem("movies", JSON.stringify(movies));
-
-    modal.style.display = "none";
-    renderMovies();
+header input {
+  flex: 1;
+  padding: 6px 10px;
+  border-radius: 6px;
+  border: none;
+  font-size: 14px;
 }
 
-// Remover
-function deleteMovie(index) {
-    movies.splice(index, 1);
-    localStorage.setItem("movies", JSON.stringify(movies));
-    renderMovies();
+button {
+  background: #e50914;
+  border: none;
+  color: white;
+  padding: 8px 12px;
+  border-radius: 6px;
+  cursor: pointer;
 }
 
-closeBtn.onclick = () => {
-    modal.style.display = "none";
-};
+button:hover {
+  background: #ff1a1a;
+}
+
+#moviesList .movie-card {
+  background: #11151a;
+  border-radius: 10px;
+  padding: 10px;
+  margin-bottom: 15px;
+  display: flex;
+  gap: 15px;
+  align-items: center;
+}
+
+.movie-card img {
+  width: 100px;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 6px;
+  background: #08121a;
+}
+
+.popup {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  backdrop-filter: blur(5px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.hidden {
+  display: none;
+}
+
+.popup-content {
+  background: #222;
+  padding: 20px;
+  border-radius: 10px;
+  width: 300px;
+}
+
 
 
 
