@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>MiniNet — Filmes em Cartaz</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header>
+  <h1>MiniNet - Filmes em Cartaz</h1>
+  <input type="text" id="searchInput" placeholder="Pesquisar filme...">
+  <button id="addMovieBtn">Adicionar Filme</button>
+</header>
+
+<main id="moviesList"></main>
+
+<!-- Popup para editar -->
+<div id="editPopup" class="popup hidden">
+  <div class="popup-content">
+    <h2>Editar Filme</h2>
+    <label>Título:</label>
+    <input type="text" id="editTitle">
+    <label>Ano:</label>
+    <input type="number" id="editYear">
+    <label>Idade mínima:</label>
+    <input type="number" id="editAge">
+    <label>Avaliação (0-10):</label>
+    <input type="number" id="editRating" min="0" max="10">
+    <label>Imagem:</label>
+    <input type="file" id="editImage">
+    <div style="margin-top:10px;">
+      <button id="saveEditBtn">Guardar</button>
+      <button id="cancelEditBtn">Cancelar</button>
+    </div>
+  </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
+
+
+
+
+
